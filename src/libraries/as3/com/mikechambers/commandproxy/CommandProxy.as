@@ -2,6 +2,7 @@ package com.mikechambers.commandproxy
 {
 	import com.mikechambers.commandproxy.commands.IProxyCommand;
 	
+	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
@@ -12,6 +13,9 @@ package com.mikechambers.commandproxy
 	public class CommandProxy extends EventDispatcher
 	{	
 		private var socket:Socket;
+		
+		//todo: need to pass an id with each call
+		private var commandHash:Dictionary = new Dictionary();
 		
 		public function connect(port:int, host:String = "127.0.0.1"):void
 		{
@@ -29,6 +33,7 @@ package com.mikechambers.commandproxy
 		public function execute(command:IProxyCommand):void
 		{
 			socket.writeUTFBytes(command.generateCommand());
+			//we might need to queue these over frames
 			socket.flush();
 		}
 		
@@ -37,22 +42,23 @@ package com.mikechambers.commandproxy
 		private function onSocketData(e:ProgressEvent):void
 		{
 			var str:String = socket.readUTFBytes(socket.bytesAvailable);
+			//todo: impliment
 			trace(str);
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void
 		{
-			trace("security error");
+			dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, false, false, e.text));
 		}
 		
 		private function onIOError(e:IOErrorEvent):void
 		{	
-			trace("ioerror");
+			dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, false, false, e.text));
 		}
 		
 		private function onClose(e:Event):void
 		{
-			trace("close");	
+			dispatchEvent(new Event(Event.CLOSE));
 		}
 		
 		private function onConnect(e:Event):void
