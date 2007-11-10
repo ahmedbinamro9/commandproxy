@@ -37,6 +37,7 @@ package com.mikechambers.commandproxy
 		private function onSocketData(e:ProgressEvent):void
 		{
 			var str:String = socket.readUTFBytes(socket.bytesAvailable);
+			trace(str);
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void

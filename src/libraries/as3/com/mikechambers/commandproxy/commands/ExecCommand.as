@@ -6,6 +6,7 @@ package com.mikechambers.commandproxy.commands
 	{
 		public var path:String;
 		public var arguments:Array;
+		private var _responseData:String;
 		
 		public function ExecCommand(path:String = null, arguments:Array = null)
 		{
@@ -15,11 +16,12 @@ package com.mikechambers.commandproxy.commands
 		
 		public function get responseData():String
 		{
-			return null;
+			return _responseData;
 		}
 		
 		public function set responseData(data:String):void
 		{
+			_responseData = data;
 		}
 		
 		public function get response():Response
@@ -42,11 +44,11 @@ package com.mikechambers.commandproxy.commands
 				command.exec.path.appendChild(path);
 			}
 			
-			if(arguments != null && arguments.length > 0)
+			if(this.arguments != null && this.arguments.length > 0)
 			{	
-				for each(var s:String in arguments)
-				{
-					command.exec.arguments.appendChild("<arg>" + s + "</arg>" );
+				for each(var s:String in this.arguments)
+				{	
+					command.exec.arguments.appendChild(<arg>{s}</arg>);
 				}
 			}
 
