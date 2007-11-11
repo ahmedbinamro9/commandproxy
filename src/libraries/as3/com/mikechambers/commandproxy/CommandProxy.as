@@ -96,17 +96,21 @@ package com.mikechambers.commandproxy
 			
 			var outEvent:CommandResponseEvent;
 			var command:IProxyCommand;
-			
+			var key:String;
 			switch((x.@type).toString())
 			{
 				case ResponseType.ERROR:
 				{
 					errorEvent = new CommandErrorEvent(CommandErrorEvent.COMMAND_ERROR);
 					
-					command = commandHash[x.@id];
+					key = (x.@id).toString();
+					command = commandHash[key];
 					errorEvent.rawResponse = x;
 					errorEvent.command = command;	
+					errorEvent.text = x.message.toString();
 					dispatchEvent(errorEvent);
+					
+					removeFromHash(key);
 					return;				
 					break;
 				}
@@ -114,12 +118,10 @@ package com.mikechambers.commandproxy
 				{
 					outEvent = new CommandResponseEvent(CommandResponseEvent.COMMAND_RESPONSE);
 					
-					var s:String = (x.@id).toString();
-					command = commandHash[s];
-					
+					key = (x.@id).toString();
+					command = commandHash[key];
 					outEvent.rawResponse = x;
-					
-					
+					removeFromHash(key);
 					if(command != null)
 					{
 						outEvent.response = command.parseResponse(x);
@@ -137,6 +139,11 @@ package com.mikechambers.commandproxy
 			}
 		
 			dispatchEvent(outEvent);
+		}
+		
+		private function removeFromHash(key:String):void
+		{
+			delete commandHash[key];
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void
