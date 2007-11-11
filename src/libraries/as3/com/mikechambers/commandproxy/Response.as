@@ -2,6 +2,6 @@ package com.mikechambers.commandproxy
 {
 	public class Response
 	{
-		public var type:String;
+		public var rawData:String;
 	}
 }

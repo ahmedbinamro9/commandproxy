@@ -1,22 +1,21 @@
 package com.mikechambers.commandproxy.commands
 {
-	import com.mikechambers.commandproxy.Response;
+	import flash.xml.XMLNode;
+	
+	
 	
 	public class ExecCommand implements IProxyCommand
 	{
 		public var path:String;
 		public var arguments:Array;
 		private var _responseData:String;
+		public var captureOutput:Boolean = false;;
 		
-		public function ExecCommand(path:String = null, arguments:Array = null)
+		public function ExecCommand(path:String = null, arguments:Array = null, captureOutput:Boolean = false)
 		{
 			this.path = path;
 			this.arguments = arguments;
-		}
-		
-		public function get responseData():String
-		{
-			return _responseData;
+			this.captureOutput = captureOutput;
 		}
 		
 		public function set responseData(data:String):void
@@ -24,35 +23,63 @@ package com.mikechambers.commandproxy.commands
 			_responseData = data;
 		}
 		
-		public function get response():Response
+		public function get response():*
 		{
-			return null;
+			if(_responseData == null)
+			{
+				return null;
+			}
+			
+			var x:XML;
+			var response:ExecCommandResponse = new ExecCommandResponse();
+				response.rawData = _responseData;
+			
+			try
+			{
+				x = new XML(_responseData);
+			}
+			catch(e:Error)
+			{
+				return response;
+			}
+			
+			var outputNodeList:XMLList = x.output;
+			var outputNode:XML = outputNodeList[0];
+			
+			if(outputNode == null)
+			{
+				return response;
+			}
+			
+			response.output = outputNode.toString();
+			
+			return response;
 		}
 		
-		public function generateCommand():String
+		public function generateCommand():XML
 		{
 			var command:XML =
-				<command authtoken="">
 					<exec>
 						<path />
 						<arguments />
-					</exec>
-				</command>;
+					</exec>;
 
 			if(path != null)
 			{
-				command.exec.path.appendChild(path);
+				command.path.appendChild(path);
 			}
 			
 			if(this.arguments != null && this.arguments.length > 0)
 			{	
 				for each(var s:String in this.arguments)
 				{	
-					command.exec.arguments.appendChild(<arg>{s}</arg>);
+					command.arguments.appendChild(<arg>{s}</arg>);
 				}
 			}
 
-			return command.toXMLString();
+			command.@capture = captureOutput;
+
+			return command;
 		}
 	}
 }

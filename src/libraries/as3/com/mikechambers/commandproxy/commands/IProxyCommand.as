@@ -4,11 +4,10 @@ package com.mikechambers.commandproxy.commands
 	
 	public interface IProxyCommand
 	{
-		function generateCommand():String;
+		function generateCommand():XML;
 		
-		function get responseData():String;
 		function set responseData(s:String):void;
 		
-		function get response():Response;
+		function get response():*;
 	}
 }
