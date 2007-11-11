@@ -10,6 +10,7 @@ package com.mikechambers.commandproxy.events
 		public static const RESONSE_NOT_UNDERSTOOD:String = "onResponseNotUnderstood";
 		
 		public var command:IProxyCommand;
+		public var rawResponse:String;
 		
 		public function CommandErrorEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{

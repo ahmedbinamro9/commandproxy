@@ -1,6 +1,8 @@
 package com.mikechambers.commandproxy.commands
 {
-	import flash.xml.XMLNode;
+	import com.mikechambers.commandproxy.Response;
+	
+	
 	
 	
 	
@@ -8,7 +10,6 @@ package com.mikechambers.commandproxy.commands
 	{
 		public var path:String;
 		public var arguments:Array;
-		private var _responseData:String;
 		public var captureOutput:Boolean = false;;
 		
 		public function ExecCommand(path:String = null, arguments:Array = null, captureOutput:Boolean = false)
@@ -18,25 +19,20 @@ package com.mikechambers.commandproxy.commands
 			this.captureOutput = captureOutput;
 		}
 		
-		public function set responseData(data:String):void
-		{
-			_responseData = data;
-		}
 		
-		public function get response():*
+		public function parseResponse(data:String):Response
 		{
-			if(_responseData == null)
+			if(data == null)
 			{
 				return null;
 			}
 			
 			var x:XML;
 			var response:ExecCommandResponse = new ExecCommandResponse();
-				response.rawData = _responseData;
 			
 			try
 			{
-				x = new XML(_responseData);
+				x = new XML(data);
 			}
 			catch(e:Error)
 			{

@@ -94,19 +94,20 @@ package com.mikechambers.commandproxy
 				return;
 			}
 			
-			var outEvent:Event;
+			var outEvent:CommandResponseEvent;
 			var command:IProxyCommand;
 			
 			switch((x.@type).toString())
 			{
 				case ResponseType.ERROR:
 				{
-					outEvent = new CommandErrorEvent(CommandErrorEvent.COMMAND_ERROR);
+					errorEvent = new CommandErrorEvent(CommandErrorEvent.COMMAND_ERROR);
 					
 					command = commandHash[x.@id];
-					command.responseData = x;
-					
-					CommandErrorEvent(outEvent).command = command;					
+					errorEvent.rawResponse = x;
+					errorEvent.command = command;	
+					dispatchEvent(errorEvent);
+					return;				
 					break;
 				}
 				case ResponseType.SUCCESS:
@@ -116,12 +117,15 @@ package com.mikechambers.commandproxy
 					var s:String = (x.@id).toString();
 					command = commandHash[s];
 					
+					outEvent.rawResponse = x;
+					
+					
 					if(command != null)
 					{
-						command.responseData = x;
+						outEvent.response = command.parseResponse(x);
 					}
 					
-					CommandResponseEvent(outEvent).command = command;	
+					outEvent.command = command;	
 					break;
 				}
 				default:

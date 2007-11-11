@@ -6,8 +6,6 @@ package com.mikechambers.commandproxy.commands
 	{
 		function generateCommand():XML;
 		
-		function set responseData(s:String):void;
-		
-		function get response():*;
+		function parseResponse(s:String):Response;
 	}
 }
