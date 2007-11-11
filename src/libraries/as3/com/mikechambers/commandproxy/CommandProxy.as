@@ -26,6 +26,16 @@ package com.mikechambers.commandproxy
 			this.authtoken = authtoken;
 		}
 		
+		public function get connected():Boolean
+		{
+			if(socket == null)
+			{
+				return false;
+			}
+			
+			return socket.connected;
+		}
+		
 		public function connect(port:int, host:String = "127.0.0.1"):void
 		{
 			socket = new Socket();
