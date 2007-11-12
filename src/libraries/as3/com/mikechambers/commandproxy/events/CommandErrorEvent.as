@@ -31,7 +31,7 @@ package com.mikechambers.commandproxy.events
 	public class CommandErrorEvent extends ErrorEvent
 	{
 		public static const COMMAND_ERROR:String = "onCommandError";
-		public static const RESONSE_NOT_UNDERSTOOD:String = "onResponseNotUnderstood";
+		public static const RESPONSE_NOT_UNDERSTOOD:String = "onResponseNotUnderstood";
 		
 		public var command:IProxyCommand;
 		public var rawResponse:String;

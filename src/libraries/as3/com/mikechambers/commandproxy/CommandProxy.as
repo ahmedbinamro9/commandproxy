@@ -69,8 +69,9 @@ package com.mikechambers.commandproxy
         	socket.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
         	socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
         	socket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
-        	
+			
 			socket.connect(host, port);
+
 		}
 		
 		public function execute(command:IProxyCommand):void
@@ -99,7 +100,7 @@ package com.mikechambers.commandproxy
 			var str:String = socket.readUTFBytes(socket.bytesAvailable);
 trace(str);
 			var x:XML;
-			var errorEvent:CommandErrorEvent = new CommandErrorEvent(CommandErrorEvent.RESONSE_NOT_UNDERSTOOD);
+			var errorEvent:CommandErrorEvent = new CommandErrorEvent(CommandErrorEvent.RESPONSE_NOT_UNDERSTOOD);
 			try
 			{
 				x = new XML(str);
