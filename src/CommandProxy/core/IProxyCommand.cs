@@ -2,5 +2,5 @@ using System.Xml;
 
 interface IProxyCommand
 {
-	XmlNode Exec(XmlNode node);
+	XmlDocument Exec(XmlDocument requestDocument, XmlDocument responseDocument);
 }
