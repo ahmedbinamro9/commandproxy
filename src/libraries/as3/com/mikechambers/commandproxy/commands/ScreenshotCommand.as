@@ -22,7 +22,7 @@ package com.mikechambers.commandproxy.commands
 		public function generateCommand():XML
 		{
 			var x:XML =
-				<screenshsot>
+				<screenshot>
 				</screenshot>;	
 				
 			if(format != null)
