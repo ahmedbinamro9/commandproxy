@@ -22,10 +22,10 @@
     THE SOFTWARE.
 */
 
-ckage com.mikechambers.commandproxy.commands
+package com.mikechambers.commandproxy
 {
-	//todo :rename to ImageFormatType and change package (one level down)
-	public class ImageFormat
+	//enum class that hold constants for ImageFormatTypes
+	public class ImageFormatType
 	{
 		//PNG
 		public static const PNG:String = "png";
