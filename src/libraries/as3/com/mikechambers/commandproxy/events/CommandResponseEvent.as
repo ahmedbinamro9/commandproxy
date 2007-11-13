@@ -29,15 +29,25 @@ package com.mikechambers.commandproxy.events
 	
 	import flash.events.Event;
 	
+	//Event that is broadcast when a response is received from the proxy after
+	//a command has sucessfuly been executed
 	public class CommandResponseEvent extends Event
 	{
+		//sucessful command response received
 		public static const COMMAND_RESPONSE:String = "onCommandResponse";
 		
+		//the command that initiated the request
 		public var command:IProxyCommand;
-		public var rawResponse:String;
-		public var response:Response;
 		
+		//the raw response sent from the proxy
+		public var rawResponse:String;
+		
+		//a Response instance with data returned from the command. This should be
+		//a subclass of Response with information specific to the command that was
+		//executed
+		public var response:Response;
 				
+		//event constructor
 		public function CommandResponseEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);

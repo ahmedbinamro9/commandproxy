@@ -26,10 +26,15 @@ package com.mikechambers.commandproxy.commands
 {
 	import com.mikechambers.commandproxy.Response;
 	
+	//interface that signifies the ability of a class to be serialized and deserialized
+	//into a command for proxy evocation
 	public interface IProxyCommand
 	{
+		//generate the command XML for the instance
 		function generateCommand():XML;
 		
+		//parse the raw response from the procy into a Response instance.
+		//note : in most cases, a subclass of Response will be returned.
 		function parseResponse(s:String):Response;
 	}
 }

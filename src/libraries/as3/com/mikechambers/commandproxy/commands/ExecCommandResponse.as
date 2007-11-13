@@ -26,8 +26,12 @@ package com.mikechambers.commandproxy.commands
 {
 	import com.mikechambers.commandproxy.Response;
 
+	//Represents a response returned after execution of a ExecCommand
 	public class ExecCommandResponse extends Response
 	{
+		//the output (if any) from the application being run
 		public var output:String;
+		
+		//todo: add captureOutput?
 	}
 }

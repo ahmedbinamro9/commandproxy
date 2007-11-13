@@ -24,6 +24,8 @@
 
 package com.mikechambers.commandproxy
 {
+	//base class for CommandResponse instances.
+	//not meant to be used / instantiated directly
 	public class Response
 	{
 	}

@@ -28,14 +28,22 @@ package com.mikechambers.commandproxy.events
 	
 	import flash.events.ErrorEvent;
 	
+	//Event broadcast when there is an error sending, receiving or executing the command
 	public class CommandErrorEvent extends ErrorEvent
 	{
+		//Error executing command
 		public static const COMMAND_ERROR:String = "onCommandError";
+		
+		//the response from the proxy was not understoof (command may have executed)
 		public static const RESPONSE_NOT_UNDERSTOOD:String = "onResponseNotUnderstood";
 		
+		//the command that initated the request
 		public var command:IProxyCommand;
+		
+		//the raw response returned from the procxy
 		public var rawResponse:String;
 		
+		//constructor
 		public function CommandErrorEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);

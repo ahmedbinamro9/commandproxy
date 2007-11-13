@@ -24,9 +24,13 @@
 
 package com.mikechambers.commandproxy
 {
+	//enum of response type strings returned from the proxy
 	public class ResponseType
 	{
+		//command was sucessfully executed
 		public static const SUCCESS:String = "success";
+		
+		//there was an error executing the command
 		public static const ERROR:String = "error";
 	}
 }

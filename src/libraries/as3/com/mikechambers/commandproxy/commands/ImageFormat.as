@@ -22,13 +22,18 @@
     THE SOFTWARE.
 */
 
-package com.mikechambers.commandproxy.commands
+ckage com.mikechambers.commandproxy.commands
 {
+	//todo :rename to ImageFormatType and change package (one level down)
 	public class ImageFormat
 	{
+		//PNG
 		public static const PNG:String = "png";
+		
+		//GIF
 		public static const GIF:String = "gif";
+		
+		//JPG
 		public static const JPG:String = "jpg";
-		public static const ICO:String = "icon";
 	}
 }

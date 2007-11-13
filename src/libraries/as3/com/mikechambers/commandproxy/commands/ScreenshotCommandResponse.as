@@ -26,10 +26,14 @@ package com.mikechambers.commandproxy.commands
 {
 	import com.mikechambers.commandproxy.Response;
 
+	//Represents a response returned after execution of a ScreenshotCommand
 	public class ScreenshotCommandResponse extends Response
 	{
+		//a native path pointing to the location that the screenshot was saved to
+		//todo: should we return a file:// url?
 		public var path:String;
 		
+		//constructor
 		public function ScreenshotCommandResponse()
 		{
 			super();
