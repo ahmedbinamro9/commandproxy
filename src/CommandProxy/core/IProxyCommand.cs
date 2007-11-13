@@ -24,7 +24,16 @@
 
 using System.Xml;
 
+/// <summary>
+/// Interface that indicates that the class is able to execute input as a command
+/// </summary>
 interface IProxyCommand
 {
+    /// <summary>
+    /// Executes a command based information in the provided XmlDocument
+    /// </summary>
+    /// <param name="requestDocument">The XmlDocument containing the command request from the client</param>
+    /// <param name="responseDocument">The XmlDocument that will be used as the base to construct the response</param>
+    /// <returns>The XmlDocument containting the response to be sent back to the client</returns>
 	XmlDocument Exec(XmlDocument requestDocument, XmlDocument responseDocument);
 }
