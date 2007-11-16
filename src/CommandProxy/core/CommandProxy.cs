@@ -76,10 +76,13 @@ namespace CommandProxy
         /// be required to communicate with the proxy</param>
         public CommandProxy(bool requireAuthToken, int port)
         {
+            this.requireAuthToken = requireAuthToken;
+
             //generator
             if (requireAuthToken)
             {
                 authToken = GenerateAuthToken();
+                Console.WriteLine("authtoken : " + authToken);
             }
 
             this.port = port;
@@ -93,6 +96,14 @@ namespace CommandProxy
         public CommandProxy(bool requireAuthToken)
         {
             this.requireAuthToken = requireAuthToken;
+
+            //generator
+            if (requireAuthToken)
+            {
+                authToken = GenerateAuthToken();
+                Console.WriteLine("authtoken : " + authToken);
+            }
+
 
             //find an avaliable port
             port = FindAvaliablePort();
@@ -118,12 +129,34 @@ namespace CommandProxy
         /// that will connect back to the proxys</param>
         public void LaunchAndRun(string processPath)
         {
-            //start the run loop
-            Run();
+            try
+            {
+                //create process to start the AIR app
+                Process p = new Process();
 
-            //todo: impliment LaunchApp api
-            //launch application
-            //LaunchApp();
+                //set path to air app
+                p.StartInfo.FileName = processPath;
+
+                Console.WriteLine(authToken + " " + port);
+                //sdet command line arguments. pass in authToken and port to use
+                p.StartInfo.Arguments = authToken + " " + port;
+
+                p.StartInfo.UseShellExecute = true;
+
+                Console.WriteLine("starting : " + processPath);
+                //start process
+                p.Start();
+
+                //start the run loop
+                Run();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("error : " + e.Message);
+                Quit();
+                //todo: should we throw an error here?
+                throw e;
+            }
         }
 
         /// <summary>
